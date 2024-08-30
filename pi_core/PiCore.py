@@ -16,6 +16,7 @@ from const import *
 from exceptions import *
 
 
+
 # Define if running on supported platform
 if get_system_id() not in SUPPORTED_PLATFORMS:
     raise NotSUpportedPlatform(PLATFORM, SUPPORTED_PLATFORMS)
@@ -46,12 +47,24 @@ class PiCore:
             for line in self.lscpu_data.splitlines():
                 if line.startswith(pattern):
                     return line.split(':', 1)[1].strip()
+                
+                else:
+                
+                    # Clear memory
+                    del line, pattern
 
         # Second method: Using 'cat /proc/cpuinfo'
         if self.cpuinfo_data:
             for line in self.cpuinfo_data.splitlines():
                 if line.startswith(pattern):
                     return line.split(':', 1)[1].strip()
+                
+                else:
+                    
+                    # Clear memory
+                    del line, pattern
+
+       
 
         # Other-wise return None
         else:
@@ -67,6 +80,7 @@ class Pi(PiCore):
     def pi_model(self) -> str:
         """ This method will get the Raspberry Pi Model name string"""
         # NOT YET
+        return ""
 
 
     def serial_number(self) -> str:
@@ -104,42 +118,89 @@ class Processor(PiCore):
 
     def name(self) -> str:
         """ This method will get the cpu name string """
+
         return self._get_query_data("Model name:")
 
     
     def archeticture(self) -> str:
         """ This method will get the cpu archeticture string name """
+
         return self._get_query_data("Architecture:")
 
     def stepping(self) -> int:
         """ This method will get the cpu Stepping value """
+
         return self._get_query_data("Stepping:")
 
     def family(self) -> int:
         """ This method will get the cpu Family value """
+
         return self._get_query_data("CPU family:")
 
     def cores_count(self, logical=False) -> int:
         """ This method will get the cores and threads number on the cpu """
-        return int(self._get_query_data("Thread(s) per core:")) * int(self._get_query_data("CPU(s):"))\
-              if logical else self._get_query_data("CPU(s):")
 
+        return int(self._get_query_data("Thread(s) per core:")) * int(self._get_query_data("CPU(s):")) \
+                if logical else self._get_query_data("CPU(s):")
 
 
     def max_clock_speed(self, aliased: bool = True) -> float:
         """ This method will get the maximum cpu clock speed """
 
+        return mhz_to_ghz(float(self._get_query_data("CPU MHz:"))) if aliased else \
+                float(self._get_query_data("CPU MHz:"))
+
     def base_clock_speed(self, aliased: bool = True) -> float:
         """ This method will get the maximum cpu clock speed """
 
-    def l1_cache_size(self, aliased: bool = True) -> int:
-        """ This method will get the level 1 cache memory size on cpu """
+        # Method 1 : using cpu data to get the proper
+        # base clock speed value
+        cpu_name: str = self.name()
+
+        # Check the model name validity
+        if cpu_name:
+            # Handle exceptions
+            try:
+                # Get the value from the json dictionary
+                return mhz_to_ghz(CPU_DATA[cpu_name]["base_clock_speed"]) if aliased else \
+                        CPU_DATA[cpu_name]["base_clock_speed"]
+            
+            except KeyError:
+                pass
+
+        # Clear memory
+        del cpu_name
+
+        # Method 2 : Calculate mathematically the cpu
+        # base clock speed using max clock speed and scaling factor
+        return mhz_to_ghz(self.max_clock_speed(aliased=False) / SCALING_FACTOR) if aliased else \
+                self.max_clock_speed(aliased=False) / SCALING_FACTOR
+
+    def l1i_cache_size(self, aliased: bool = True) -> int:
+        """ This method will get the level 1 instructions cache size"""
+
+        return self._get_query_data("L1i cache:") if aliased else \
+                kb_to_bytes(self._get_query_data("L1i cache:"))
+
+    def l1d_cache_size(self, aliased: bool = True) -> int:
+        """ This method will get the level 1 data cache size """
+
+        return self._get_query_data("L1d cache:") if aliased else \
+            kb_to_bytes(self._get_query_data("L1d cache:"))
 
     def l2_cache_size(self, aliased: bool = True) -> int:
         """ This method will get the level 2 cache memory size on cpu """
 
+        return self._get_query_data("L2 cache:") if aliased else \
+            mb_to_bytes(self._get_query_data("L2 cache:"))
+
+
     def l3_cache_size(self, aliased: bool = True) -> int:
         """ This method will get the level 3 cache memory size on cpu """
+
+        return self._get_query_data("L3 cache:") if aliased else \
+            mb_to_bytes(self._get_query_data("L3 cache:"))
+
 
     def is_overclock(self) -> bool:
         """ This method will get the cpu is overclocked or not """

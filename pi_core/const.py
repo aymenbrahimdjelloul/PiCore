@@ -5,6 +5,7 @@
 
 # IMPORTS
 import sys
+import json
 import platform
 
 # DEFINE BASIC VARIABLES
@@ -20,6 +21,12 @@ SUPPORTED_PLATFORMS: tuple = ('debian', 'Ubuntu', 'linuxmint')
 OS_RELEASE: str = "/etc/os-release"
 CPUINFO: str = ["cat", "/proc/cpuinfo"]
 LSCPU: str = "lscpu"
+
+# LOAD JSON FILE DATA
+CPU_DATA: dict = json.loads(open('data.json', 'r').read())
+
+# DEFINE CPU VAIRIABLES
+SCALING_FACTOR: float = 1.6
 
 
 if __name__ == "__main__":

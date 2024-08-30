@@ -1,0 +1,57 @@
+{
+    "ARM1176JZF-S": {
+        "model": "Broadcom BCM2835",
+        "base_clock_speed": 700,
+        "voltage": 1.2,
+        "thermal_resistance": 0.2,
+        "efficiency_percentage": 0.85,
+        "power_consumption": 2.0,
+        "thermal_design_power": 2.5,
+        "release_date": "2012-02-29",
+        "max_operating_temperature": 85
+    },
+    "Cortex-A7": {
+        "model": "Broadcom BCM2836",
+        "base_clock_speed": 900,
+        "voltage": 1.2,
+        "thermal_resistance": 0.2,
+        "efficiency_percentage": 0.85,
+        "power_consumption": 3.0,
+        "thermal_design_power": 4.0,
+        "release_date": "2015-02-02",
+        "max_operating_temperature": 85
+    },
+    "Cortex-A53": {
+        "model": "Broadcom BCM2837",
+        "base_clock_speed": 600,
+        "voltage": 1.2,
+        "thermal_resistance": 0.2,
+        "efficiency_percentage": 0.85,
+        "power_consumption": 3.5,
+        "thermal_design_power": 4.0,
+        "release_date": "2016-02-29",
+        "max_operating_temperature": 85
+    },
+    "Cortex-A72": {
+        "model": "Broadcom BCM2711",
+        "base_clock_speed": 600,
+        "voltage_v": 1.35,
+        "thermal_resistance": 0.3,
+        "efficiency_percentage": 0.90,
+        "power_consumption": 5.0,
+        "thermal_design_power": 6.0,
+        "release_date": "2019-06-24",
+        "max_operating_temperature": 85
+    },
+    "Cortex-A76": {
+        "model": "Broadcom BCM2711",
+        "base_clock_speed": 1200,
+        "voltage": 1.35,
+        "thermal_resistance": 0.3,
+        "efficiency_percentage": 0.90,
+        "power_consumption": 6.0,
+        "thermal_design_power": 7.0,
+        "release_date": "2023-01-01",
+        "max_operating_temperature": 85
+    }
+}

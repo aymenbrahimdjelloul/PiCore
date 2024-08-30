@@ -21,7 +21,6 @@ class NotSUpportedPlatform(BaseException):
 
 class RunningOnVirtualMachine(BaseException):
 
-
     def __str__(self) -> str:
         return ""
 
