@@ -35,7 +35,7 @@
     "Cortex-A72": {
         "model": "Broadcom BCM2711",
         "base_clock_speed": 600,
-        "voltage_v": 1.35,
+        "voltage": 1.35,
         "thermal_resistance": 0.3,
         "efficiency_percentage": 0.90,
         "power_consumption": 5.0,

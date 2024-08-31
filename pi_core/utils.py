@@ -1,6 +1,11 @@
 """
+This code or file is pertinent to the 'PiCore' Project
+Copyright (c) 2024, 'Aymen Brahim Djelloul'. All rights reserved.
+Use of this source code is governed by a MIT license that can be
+found in the LICENSE file.
+
 @author : Aymen Brahim DJelloul
-Version : 1.0
+Version : 1.0.0
 Date : 29.08.2024
 License : MIT
 
@@ -17,7 +22,7 @@ import sys
 import subprocess
 from const import *
 from math import ceil
-
+from os import uname
 
 
 def get_system_id() -> str:
@@ -89,6 +94,18 @@ def is_virtual_machine() -> bool:
         print(f"An unexpected error occurred: {e}")
         return False
 
+
+def is_raspberrypi() -> bool:
+    """ This method will check if running on raspberry pi or not """
+
+    try:
+
+        # Check the machine architecture (32-bit or 64-bit ARM)
+        arch = uname().machine
+        return True if arch.startswith("arm") or arch.startswith("aarch64") else False
+
+    except Exception:
+        return False
 
 def mhz_to_ghz(value: float) -> float:
     """ This method will conveert Mhz to Ghz value"""

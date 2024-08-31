@@ -1,4 +1,9 @@
 """
+This code or file is pertinent to the 'PiCore' Project
+Copyright (c) 2024, 'Aymen Brahim Djelloul'. All rights reserved.
+Use of this source code is governed by a MIT license that can be
+found in the LICENSE file.
+
 @author : Aymen Brahim Djelloul
 Date : 29.08.2024
 License : MIT
