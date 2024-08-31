@@ -104,6 +104,17 @@ class PiCore:
     def _extract_value(self, pattern: str, string: str) -> str:
         """ This method will get specific value from a given string"""
 
+        # Iterate through every line
+        for line in string.splitlines():
+            
+            string: str = line.strip("#=")
+            print(string)
+            if string.startswith(pattern):
+                return string[len(pattern): len(string)]
+        
+        # Other-wise retrun None
+        return None
+
 class Pi(PiCore):
 
     def __init__(self) -> None:
@@ -249,11 +260,12 @@ class Processor(PiCore):
         """ This method will get the cpu regular voltage """
         
         # Check if running on a raspberry pi
-        if is_raspberrypi():
+        if self.is_raspberrypi:
+
             # Check if the cpu is not overclocked
             if self.is_overclock():
                 # Method 1 : if the cpu is overclocked use 'config.txt' to get voltage
-                return float(self._extract_value("over_voltage=", self.config))
+                return float(self._extract_value("over_voltage", self.config))
 
             else:
                 # Method 2: if the not overclocked use pre-colletcted data 
